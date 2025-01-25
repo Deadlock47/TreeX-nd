@@ -1,0 +1,41 @@
+{
+  "expo": {
+    "name": "TreeX",
+    "slug": "TreeX",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#000000"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#000000"
+      },
+      "package": "com.deadlock0001.typer2",
+      "versionCode": 5
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "14125664-7258-4335-939f-dc73cd022598"
+      }
+    },
+    "runtimeVersion": "1.0.0i",
+    "updates": {
+      "url": "https://u.expo.dev/14125664-7258-4335-939f-dc73cd022598"
+    }
+  }
+}

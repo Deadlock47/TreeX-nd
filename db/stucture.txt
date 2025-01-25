@@ -1,0 +1,14 @@
+table ==> jav_details
+ - code STRING
+ - title STRING
+ - title_jap STRING
+ - page STRING
+ - poster -- image_urls STRING
+ - preview --videolink STRING
+ - poster_thumb STRING
+ - details [director , studio , date , duration] [STRING , STRING , DATE , INTEGER]
+ - actress [name , image] [STRING , STRING]
+   - actress_name STRING
+   - actress_image STRING
+ - screenshots -- image_urls STRING[]
+ - tags -- tag_names STRING[]
