@@ -13,6 +13,7 @@
     "@expo-google-fonts/nunito": "^0.2.3",
     "@expo-google-fonts/roboto": "^0.2.3",
     "@expo-google-fonts/source-sans-pro": "^0.2.3",
+    "@gorhom/bottom-sheet": "^5.0.6",
     "axios": "^1.7.9",
     "expo": "~52.0.25",
     "expo-constants": "~17.0.2",

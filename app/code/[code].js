@@ -130,10 +130,10 @@ const Code = () => {
               { data?.actress && (
                 <View className="w-screen h-fit p-3" >
                     <Text className="text-neutral-300  text-xl  p-2" >Actress:</Text>
-                    <ScrollView horizontal className="w-screen h-auto flex-row gap-3 p-2 " >
+                    <ScrollView horizontal className="w-screen h-auto flex-row gap-6 p-2 " >
                      {
                      
-                      data?.actress?.length > 0 && data?.actress?.map((item,key)=>(<View key={key} className="w-fit h-full  " >
+                      data?.actress?.length > 0 && data?.actress?.map((item,key)=>(<View key={key} className="w-fit h-full ml-4 " >
                         <Pressable  onTouchEnd={()=>{
                           // setActressName(data.actress[0].name)
                           router.push(`/actress/${item.name}?actress_code=${item.id}&image=${item.image}`)
@@ -146,7 +146,7 @@ const Code = () => {
                         <Text className="text-center text-neutral-200" >{ item?.name}</Text>
                       </View>))
                     }
-                   
+                    
                     </ScrollView>
               </View>)}
               {/* screenshots  */}

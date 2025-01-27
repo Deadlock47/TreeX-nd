@@ -8,7 +8,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { SQLiteProvider } from 'expo-sqlite';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { create_table } from '../components/queries';
-
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 
 const _layout = () => {
   const focusedColor = "rgba(211, 169, 0, 1)"
@@ -76,7 +76,7 @@ const _layout = () => {
           }
             }}  ></Tabs.Screen>
           {/* <Tabs.Screen name='content' options={{headerShown:false}} ></Tabs.Screen> */}
-          <Tabs.Screen name='searchScreen' options={{headerShown:false, tabBarIcon : ({focused,color,size})=>
+          <Tabs.Screen name='searchScreen' options={{headerShown:false,href:null, tabBarIcon : ({focused,color,size})=>
           {
             return (
               <View className="flex justify-center items-center" style={{
@@ -132,7 +132,8 @@ const _layout = () => {
             )
           }
             }}></Tabs.Screen>
-          <Tabs.Screen name='actress' options={{headerShown:false,href:null, tabBarIcon : ({focused,color,size})=>
+          
+            <Tabs.Screen name='tags' options={{headerShown:false, tabBarIcon : ({focused,color,size})=>
           {
             return (
               <View className="flex justify-center items-center" style={{
@@ -149,18 +150,18 @@ const _layout = () => {
               <View>
                 {
                   focused ? 
-                  <MaterialCommunityIcons name="gender-male-female" size={24} color={focusedColor} /> : 
-                  <MaterialCommunityIcons name="gender-male-female" size={24} color="black" />
+                  <FontAwesome5 name="hashtag" size={24} color={focusedColor} /> : 
+                  <FontAwesome5 name="hashtag" size={24} color="black" />
                 }
               </View>
               <Text style={{
                 color : focused ? focusedColor : 'black'
-              }}>Casts</Text>
+              }}>Tags</Text>
               </View>
             )
           }
             }} ></Tabs.Screen>
-            {/* <Tabs.Screen> </Tabs.Screen> */}
+            
             <Tabs.Screen name='code'  options={{headerShown:false,href:null, tabBarIcon : ({focused,color,size})=>
           {
             return (

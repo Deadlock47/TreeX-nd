@@ -23,3 +23,5 @@ export async function search_data_local(key,value) {
             return true;
     return false;
 }
+
+// ["EBOD-625", "EBOD-682", "EBOD-716", "EBOD-744", "EBVR-057", "EKDV-600", "IPX-169", "IPX-201", "IPX-222", "JUR-182", "OKS-123", "ROE-170", "TKJUR-166", "URE-075", "URE-076", "URE-091", "actress_list", "code_list", "test"]

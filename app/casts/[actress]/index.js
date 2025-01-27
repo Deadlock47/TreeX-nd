@@ -8,51 +8,70 @@ import { Image } from 'expo-image';
 import {  useFonts, Inter_900Black } from '@expo-google-fonts/inter';
 import { Roboto_400Regular } from '@expo-google-fonts/roboto';
 import { Nunito_400Regular } from '@expo-google-fonts/nunito';
-import Item from '../../components/item';
+// import Item from '../../components/item';
+import Item from '../../../components/item';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Storage } from 'expo-sqlite/kv-store';
 
 
 // let {width , height} = Dimensions.get('window')
 
 const Actress_Info = () => {
-    const {actress,actress_code,image} = useLocalSearchParams();
+    const params = useLocalSearchParams();
+    const {actress,name , image} = params;
+    // const actress = data.name;
+    // console.log(actress , name , image);
     let [fontsLoaded] = useFonts({
       Inter_900Black,
       Roboto_400Regular,
       Nunito_400Regular
     });
     
-      const [refreshing,setRefreshing] = useState(true);
+    const [refreshing,setRefreshing] = useState(true);
+    const [actress_codes ,setActress_codes] = useState();
+    
+    // const []
+    
     function refresh(){
       setRefreshing(false)
     }
-    useEffect(()=>{
+    async function get_codes()
+    {
+        const key_str = actress.toString()+"code";
+        const result = await Storage.getItem(key_str)
+        setActress_codes(result.split(","))
+        // console.log(result)
         refresh();
-    },[actress])
+    }
+    useEffect(()=>{
+        // refresh();
+        get_codes();
+        console.log(actress_codes)
+    },[name])
 
     // // console.log(actress , image , actress_code)
   return (
     <SafeAreaProvider className='w-screen h-full bg-neutral-900' >
       <SafeAreaView className="w-screen h-full bg-neutral-900" >
-        <StatusBar style='light' ></StatusBar>
+        <StatusBar style='auto' ></StatusBar>
         <ScrollView 
           className='w-screen h-auto  p-2  '
-          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={refresh} ></RefreshControl>}
-                    
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={refresh} ></RefreshControl>}      
         >
         <View  className='w-screen h-fit p-10 flex gap-3 justify-center items-center  ' >
           <View className='h-fit w-fit  rounded-md' style={styles.cardShadow} >
-            <Image  source={{uri : image || "../../assets/no_image_actress.jpg" }}   className='' style={{width:140 , height:140 , borderRadius:60}} contentFit='contain' ></Image>
+            <Image  source={{uri : image }}   className='' style={{width:140 , height:140 , borderRadius:60}} contentFit='contain' ></Image>
           </View>
-          <Text className='text-white  ' style={{fontFamily: 'Nunito_400Regular', fontSize: 20}} >{actress}</Text>
-         
+          <Text className='text-white  ' style={{fontFamily: 'Nunito_400Regular', fontSize: 20}} >{name}</Text>
         </View>
         <View className='flex-row flex-wrap gap-3 justify-center items-center mb-32' >
-
-          <Item code={"IPX-169"} key={1} thumb={true} ></Item>
-          <Item code={"IPX-169"} key={2} thumb={true} ></Item>
-          <Item code={"IPX-169"} key={3} thumb={true} ></Item>
-          <Item code={"IPX-169"} key={4} thumb={true} ></Item>
+            {
+                actress_codes?.map((item,index)=>
+                
+                    <Item code={item} key={index} thumb={true} ></Item>
+                )   
+            }
+          
         </View>
         </ScrollView>
       </SafeAreaView>

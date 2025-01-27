@@ -8,6 +8,7 @@ import Feather from '@expo/vector-icons/Feather';
 import Item from '../components/item'
 import { Storage } from 'expo-sqlite/kv-store'
 import { RefreshControl } from 'react-native'
+import BtmDrawer from '../components/bottom_drarwr'
 
 const index = () => {
     const [jav_list , setJav_list] = useState([]);
@@ -53,8 +54,9 @@ const index = () => {
                 router.replace("/")
             }} className="bg-[#b28300] rounded-2xl p-1" name="menu" size={40} color="white" />
             <Feather onPress={()=>{
-                router.push("/search")
+                router.push("/searchScreen")
             }} name="search" size={34} color="white" className="bg-[#ca9401] rounded-2xl p-2" />
+            
           </View>
           <View className=' w-screen h-10 flex-row items-center justify-between' >
               <View className='bg-yellow-500 pl-2 ml-3 w-fit h-8 text-center flex-row items-center justify-center p-1 rounded-xl'>
@@ -77,10 +79,11 @@ const index = () => {
                  <Item  code={'IPX-169'}></Item>
                 <Item code={'IPX-222'}></Item>
                 <Item code={'IPX-201'}></Item>
-                <Item code={'ROE-170'}></Item>
-
+                
                 <Item code={'IPX-201'}></Item>
+                <Item code={'ROE-170'}></Item>
                 <Item code={'IPX-201'}></Item> */}
+
                 {
                   jav_list.map((item)=>item !== "" && <Item code={item} key={item} ></Item>)
                 }
