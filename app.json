@@ -22,7 +22,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#000000"
       },
-      "package": "com.deadlock0001.typer2",
+      "package": "com.deadlock0001.treex",
       "versionCode": 5
     },
     "web": {
