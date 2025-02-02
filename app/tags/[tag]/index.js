@@ -30,7 +30,6 @@ const Tag = () => {
       </View>
       <ScrollView className = "w-screen p-2 h-full mb-20 "
               refreshControl={<RefreshControl refreshing={refreshing} onRefresh={get_Tag_Codes} ></RefreshControl>}
-            
           >  
                 {
                   tagCodes.map((item)=>item !== "" && <Item code={item} key={item} ></Item>)
