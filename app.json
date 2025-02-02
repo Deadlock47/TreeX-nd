@@ -30,12 +30,12 @@
     },
     "extra": {
       "eas": {
-        "projectId": "14125664-7258-4335-939f-dc73cd022598"
+        "projectId": "8d5a7888-c8df-4646-8e91-acf60bcfba86"
       }
     },
     "runtimeVersion": "1.0.0i",
     "updates": {
-      "url": "https://u.expo.dev/14125664-7258-4335-939f-dc73cd022598"
+      "url": "https://u.expo.dev/8d5a7888-c8df-4646-8e91-acf60bcfba86"
     },
     "plugins": [
       "expo-router",
