@@ -1,11 +1,10 @@
 {
   "expo": {
     "name": "TreeX",
-    "slug": "TreeX",
+    "slug": "treex",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover",
@@ -30,16 +29,15 @@
     },
     "extra": {
       "eas": {
-        "projectId": "8d5a7888-c8df-4646-8e91-acf60bcfba86"
+        "projectId": "89bebd7a-05e8-4395-85f1-b4e8cc2f242e"
       }
     },
     "runtimeVersion": "1.0.0i",
-    "updates": {
-      "url": "https://u.expo.dev/8d5a7888-c8df-4646-8e91-acf60bcfba86"
-    },
+    
     "plugins": [
       "expo-router",
       "expo-sqlite"
-    ]
+    ],
+    "owner": "deadlock0001"
   }
 }
