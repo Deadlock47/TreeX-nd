@@ -8,11 +8,26 @@ import Feather from '@expo/vector-icons/Feather';
 import Item from '../components/item'
 import { Storage } from 'expo-sqlite/kv-store'
 import { RefreshControl } from 'react-native'
+import * as Clipboard from 'expo-clipboard';
+
 import BtmDrawer from '../components/bottom_drarwr'
 
 const index = () => {
     const [jav_list , setJav_list] = useState([]);
     const [refreshing,setRefreshing] = useState(true);
+
+    async function refresh_data()
+    {
+      const result = await Storage.getItem("code_list");
+      console.log(result);
+      //
+      await Storage.clear();
+      // await Storage.setItem("code_list",result);
+      await Clipboard.setStringAsync(result);
+      //
+      router.replace('/')
+    }
+
     async function get_jav_lists() {
       const lists = await Storage.getItem("code_list");
       if(!lists)
@@ -21,28 +36,15 @@ const index = () => {
       }
 
       setJav_list(lists.split(","));
-      console.log(jav_list)
+      // console.log(jav_list)
 
       // let code_lists = await Storage.getItem("code_list");
       setRefreshing(false);
     }
     
-    // async function check_temp()
-    // {
-    //   let code_lists = await Storage.getItem("code_list");
-    //   let jav_codes = code_lists.split(",");
-              
-    //   for(let i=0;i<jav_codes.length;i++){
-                  
-    //     let code = jav_codes[i];
-    //     await Storage.removeItem(code);
-    //   }
-    //   await Storage.removeItem("code_list");
-    // }
+    
     useEffect(()=>{
-      get_jav_lists()
-      // check_temp();
-      // console.log("jav_lis :-",jav_list)
+      get_jav_lists();
     },[])
   return (
     <SafeAreaProvider className='h-full bg-neutral-700'>
@@ -50,7 +52,7 @@ const index = () => {
           <StatusBar backgroundColor='transparent'  ></StatusBar>
           <View className="flex-row items-center justify-between py-4 px-3   " >
             <Entypo onPress={()=>{
-
+                refresh_data();
                 router.replace("/")
             }} className="bg-[#b28300] rounded-2xl p-1" name="menu" size={40} color="white" />
             <Feather onPress={()=>{
@@ -76,14 +78,19 @@ const index = () => {
           >
               
                 {/*
-                 <Item  code={'IPX-169'}></Item>
-                <Item code={'IPX-222'}></Item>
-                <Item code={'IPX-201'}></Item>
-                
+                 
+                 
+                 
+                 <Item code={'IPX-201'}></Item> */}
+
+                 {/* <Item  code={'IPX-169'}></Item>
+                 <Item code={'IPX-222'}></Item>
+                 <Item code={'EBOD-875'}></Item>
+
                 <Item code={'IPX-201'}></Item>
                 <Item code={'ROE-170'}></Item>
-                <Item code={'IPX-201'}></Item> */}
-
+                 */}
+                
                 {
                   jav_list.map((item)=>item !== "" && <Item code={item} key={item} ></Item>)
                 }

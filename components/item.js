@@ -1,4 +1,4 @@
-import { View, Text, Image,ActivityIndicator } from 'react-native'
+import { View, Text, Image,ActivityIndicator, TouchableOpacity, Pressable } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { router } from 'expo-router';
@@ -17,13 +17,67 @@ const Item = (props) => {
     }
     const [loading , setLoading] = useState(true);
     const [data , setData] = useState(null);
+    const [noresult , setNoresult] = useState(false);
+
     const lowerCode = code_final.toLowerCase();
 
+async function set_data(tag_code,code)
+{
+    const result = await Storage.getItem(tag_code.toString());
+    if(!result)
+    {
+        await Storage.setItem(tag_code.toString(),"");
+    }
+    const main_arr = result.split(',');
+    let arr =  [...main_arr] 
+    if(arr.includes(code)) return;
+    arr = [...arr,code];
+    arr = arr.join(',');
+    await Storage.setItem(tag_code.toString(),arr);
+}
+async function store_code_for_tag(newTags,code){
+    newTags.forEach((item)=>{
+        console.log(item)
+        set_data(item.tag_id,code);
+    })
+}
+
+async function store_each_tag(newTags) {
+    try {
+        // Retrieve existing tags (stored as an object)
+        let storedTags = await Storage.getItem('tags_list');
+
+        // Initialize as an empty object if storage is empty
+        if (!storedTags) {
+            storedTags = "{}";
+            await Storage.setItem("tags_list", storedTags);
+        }
+
+        let tagMap = JSON.parse(storedTags);
+
+        // Merge new tags into the tagMap
+        newTags.forEach(tag => {
+            tagMap[tag.tag_id] = tag; // Overwrites if tag already exists
+        });
+
+        // Store back the updated object
+        await Storage.setItem("tags_list", JSON.stringify(tagMap));
+
+        // Debugging: Check stored data
+        console.log("Updated tags list:", await Storage.getItem("tags_list"));
+
+        } catch (error) {
+            console.log("Error storing tags:", error);
+        }
+    }
+    
+    
     async function set_actress_data(actress_id , actress_data){
         try {
             
             const result = await Storage.getItem(actress_id);
             // console.log("first",result)
+            
             if(!result)
             {
                 await Storage.setItem(actress_id,JSON.stringify(actress_data));
@@ -96,7 +150,9 @@ const Item = (props) => {
          set_actress_list(actress_id.toString());
          set_actress_data(actress_id.toString(),actress_data);
          set_actress_video_codes(actress_id.toString(),video_code);
-        console.log("Data Loading Completes... Here!!")
+         
+         console.log("Data Loading Completes... Here!!")
+    
     }
     async function get_video_data_(lowerCode){
         try {
@@ -104,21 +160,25 @@ const Item = (props) => {
             if(cachedData)
             {
                 console.log("Data Found in local Storage");
+                console.log(JSON.parse(cachedData))
                 return JSON.parse(cachedData);
             }
             else{
                 console.log("Data not Found Calling api..")
                 const response = await axios.get(`https://rn-jv.mytyper.workers.dev/code/${lowerCode}`);
                 const result = response.data;
-
+                if(result.status == '404')
+                {
+                    setNoresult(true);
+                    console.log("No result for ",lowerCode);
+                    return "";
+                }
                 // code list manage
                 let code_lists = await Storage.getItem("code_list");
                 let jav_codes = code_lists.split(",");
                 if(!jav_codes.includes(result.id))
                     jav_codes = [...jav_codes,result.id];
                 await Storage.setItem("code_list",jav_codes.join(","));
-
-                // result return
                 await Storage.setItem(result.id,JSON.stringify(result));
                 return result;
             }
@@ -135,16 +195,24 @@ const Item = (props) => {
                 // await Storage.clear();
                 const data = await get_video_data_(lowerCode);
                 setData(data);
+                console.log(data.poster_thumb)
                 if(data.actress)
                 {
                     for(let i=0;i<data.actress.length;i++)
                     {
-                        console.log(data.actress[i])
+                        
+                        // console.log(data.actress[i])
                         store_Actress(data.actress[i].id,data.actress[i],data.id)
                     }
                 }
-                const result = await Storage.getItem("actress_list");
-                console.log(result);
+                if(data.tags)
+                {
+                    store_each_tag(data.tags);
+                    store_code_for_tag(data.tags,data.id);
+                }
+                
+                // const result = await Storage.getItem("actress_list");
+                // console.log(JSON.parse(result));
             } catch (error) {
                 console.log(error)
             }
@@ -159,10 +227,11 @@ const Item = (props) => {
     //  loading ? (<Text>Loading...........</Text>)
     //     :
         
-        <View className={`${thumb ? 'w-[calc(48%)]' : 'w-full'} rounded-lg overflow-hidden bg-black h-auto mb-4 `} onTouchEnd={()=>{
+        <Pressable className={`${thumb ? 'w-[calc(48%)]' : 'w-full'} rounded-lg overflow-hidden bg-black h-auto mb-4 `} onTouchEnd={()=>{
                       router.push(`/code/${code_tmp}`)
                   }}>
-            {    
+            {  
+
             
               thumb ?
                 (
@@ -173,7 +242,12 @@ const Item = (props) => {
                                 <ActivityIndicator size="large" color="#d1d5db" />
                             </View>
                         </View> 
-                    :
+                    : noresult ?
+                        <View className='flex justify-center items-center' >
+                            <Image className=" rounded-t-xl " width={25} height={20} resizeMode='cover' source={require('../assets/nores-removebg-preview.png')} ></Image>
+                            <Text style={{'color':'white'}} numberOfLines={2} className="p-1 font-bold ">NA : {code_tmp}</Text>
+                        </View>
+                        : 
                         <View>
                             <Image className=" rounded-t-xl " width={'auto'} height={248} resizeMode='contain' source={{uri : data?.poster_thumb ? data?.poster_thumb : '../assets/nores-removebg-preview.png'}} ></Image>
                             <Text style={{'color':'white'}} numberOfLines={2} className="p-1 font-bold ">{data?.id}  {data?.title?.length && data?.title }</Text>
@@ -194,7 +268,7 @@ const Item = (props) => {
                     </View>))
             }
             
-        </View>
+        </Pressable>
     
     
   )

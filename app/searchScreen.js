@@ -15,7 +15,7 @@ const search = () => {
   const [data , setData] = useState({});
   const [txtinput , setTxtinput] = useState("");
   const [searchInput , setSearchInput] = useState("");
-
+  const [searchPress , setSearchPress] = useState(false);
   async function fetch_code_data(code){
     setLoading(true);
     const response = await axios.get(`https://rn-jv.mytyper.workers.dev/code/${lowerCode}`);
@@ -32,7 +32,7 @@ const search = () => {
     <SafeAreaProvider className="h-full bg-neutral-700 " >
       <SafeAreaView className=" bg-neutral-800 w-screen h-full" >
       <StatusBar backgroundColor='transparent' ></StatusBar>
-      <View className="flex-row w-screen justify-center items-center">
+      <View className="flex-row w-fit justify-center items-center">
           <View className='mb-3 flex-row justify-between rounded-full mt-3 mr-2 ml-2 items-center border border-neutral-500' >
               <TextInput value={txtinput} onChangeText={setTxtinput}  placeholder='Search' placeholderTextColor={'lightgray'} 
               // onChangeText={handleSearchDebounce}
@@ -42,21 +42,35 @@ const search = () => {
                   onPress={()=>{
                       // setStatus("loading");
                       setSearchInput(txtinput);
+                      if(searchPress)
+                      {
+                        setTxtinput("");
+                        setSearchInput("");
+                      }
+                      setSearchPress(!searchPress);
+
+
                   }}
 
                   className='rounded-full p-3 m-1 bg-neutral-700'
               >
+                {
+                  searchPress ?
+                  <FontAwesome name="remove" size={24} color="white" />
+                  : 
                   <FontAwesome name="search" size={24} color="white" />
+
+                }
               </TouchableOpacity>
 
           </View>
-          {/* 
-            <View className="rounded-xl p-3 mr-4  h-14 bg-[#d3b107] ">
-              <Text className="text-white text-center ">
-                  <MaterialIcons name="playlist-add" size={28} color="white" />
-              </Text>
-            </View>
-          */}
+{/*         
+          <View className="rounded-xl   h-14 bg-[#d3b107] ">
+            <Text className="text-white text-center ">
+                <MaterialIcons name="playlist-add" size={28} color="white" />
+            </Text>
+          </View> */}
+        
       </View>
     {/* ######################### */}
     <View className="w-screen h-screen " >

@@ -20,6 +20,7 @@ const Actress_Info = () => {
     const params = useLocalSearchParams();
     const {actress,name , image} = params;
     // const actress = data.name;
+    console.log("ghghgh",actress , name , image)
     // console.log(actress , name , image);
     let [fontsLoaded] = useFonts({
       Inter_900Black,

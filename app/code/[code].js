@@ -29,7 +29,7 @@ const Code = () => {
     const result = await Storage.getItem(code);
     setData(JSON.parse(result))
     setScreenshots(data?.screenshots)
-    // // console.log(screenshots)
+    // console.log(data)
     setRefreshing(false) 
     
 
@@ -48,8 +48,8 @@ const Code = () => {
       {
         setScreenshots(data?.screenshots)
       }
-     
-      // // console.log(data?.screenshots)
+      
+      console.log(data)
       // // console.log(screenshots)
   },[code])
   return (
@@ -111,14 +111,20 @@ const Code = () => {
               </View>
                   {/* tags */}
               <View className=" w-full h-fit p-3 " >
-                  <Text className=" text-xl text-neutral-300 p-2" >Tags:</Text>
+                  <View>
+                        <Text className=" text-xl text-neutral-300 p-2" >Tags:</Text>
+                        <Text className='' >Load Tags</Text>
+                  </View>
                   <View className="w-fit h-fit flex flex-row flex-wrap gap-1 p-4" >
                     {
-                      data?.tags?.map((items , key)=>{
+                      data?.tags?.map((tag , key)=>{
+                        // console.log(data.tags)
                         return (
-                          
-                          <Text key={key} className="w-fit bg-yellow-700 p-2 h-fit pt-2.5 pb-2.5 text-neutral-200 "> {items.name}</Text>
-                      
+                          <Pressable onTouchEnd={()=>{
+                                     router.push({pathname : `/tags/${tag.tag_id}`,params : {tag_name : tag.name}})
+                                   }} key={tag.tag_id} className='' >
+                                     <Text className='w-fit bg-yellow-700 p-2 h-fit pt-2.5 pb-2.5 text-neutral-200 ' key={tag.tag_id}>{tag.name}</Text>
+                                   </Pressable>
                         )
                       })
                       
@@ -134,11 +140,10 @@ const Code = () => {
                      {
                      
                       data?.actress?.length > 0 && data?.actress?.map((item,key)=>(<View key={key} className="w-fit h-full ml-4 " >
-                        <Pressable  onTouchEnd={()=>{
-                          // setActressName(data.actress[0].name)
-                          router.push(`/actress/${item.name}?actress_code=${item.id}&image=${item.image}`)
-                          // console.log(item.name);
-                        }} className="w-fit h-fit">
+                        <Pressable   onTouchEnd={()=>{
+                          // console.log(item)
+                                  router.push({pathname : `/casts/${item.id}`,params :{image : item.image , name : item.name}})
+                                }} className="w-fit h-fit">
                           <Image borderRadius={40} width={100} height={100} contentFit='cover'  source={ item.image.includes("null") ?  require("../../assets/no_image_actress.jpg") : item.image  }
                           >
                           </Image>
@@ -161,7 +166,7 @@ const Code = () => {
                       setCurrentIndex(key)
                       setVisible(true);
                     }}  key={key} className=' bg-red-400' >
-                      <Image width={100} height={100} resizeMode='cover'  source={{uri : item}} ></Image>
+                      <Image width={100} height={100} contentFit='cover'  source={{uri : item}} ></Image>
                     </Pressable>)
                     }
                  </View>

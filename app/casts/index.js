@@ -42,7 +42,7 @@ const index = () => {
           <RefreshControl refreshing={refreshing} onRefresh={get_Actress_list} />
         }
       >
-        <View className='flex-row flex-wrap gap-3 justify-start items-center'>
+        <View className='flex-row flex-wrap gap-2 justify-start items-center'>
 
         {
           actress_list.map((item,index)=><Actress_Item key={index} item={item} ></Actress_Item>)
@@ -65,9 +65,9 @@ const Actress_Item= (props)=>{
       });
 
   async function get_actress_data(txt) {
-    const result = await Storage.getItem(txt);
+    const result = await Storage.getItem(txt.toString());
     setData(JSON.parse(result))
-    console.log(result)
+    // console.log(result)
   }
   useEffect(()=>{
     get_actress_data(txt);
@@ -78,13 +78,14 @@ const Actress_Item= (props)=>{
         onTouchEnd={()=>{
           router.push({pathname : `/casts/${txt}`,params :{image : data.image , name : data.name}})
         }}
-        className=' p-2 mt-3  flex items-center'
-        width={width*0.43}
+        className=' p-2 mt-3   flex '
+        width={width * 0.29}
+        height = {height * 0.19}
     >
-      <View className='w-fit h-fit rounded-lg overflow-hidden ' >
+      <View className=' p-1 h-fit   flex justify-center items-center  rounded-lg overflow-hidden ' >
         {
           data?.image ?
-          <Image width={100} height={100}  source={{uri : data?.image }} onError={(e) => {
+          <Image width={90} height={90} borderRadius={7}  source={{uri : data?.image }} onError={(e) => {
 
             // Set the source to the fallback image when error occurs
     
@@ -92,11 +93,12 @@ const Actress_Item= (props)=>{
     
           }} ></Image>
           : 
-          <Image width={100} height={100}  source={require("../../assets/no_image_actress.jpg")} ></Image>
+          <Image width={90} height={90}  source={require("../../assets/no_image_actress.jpg")} ></Image>
 
         }
+      <Text className='text-white pt-2 text-center text-wrap' adjustsFontSizeToFit={true}
+numberOfLines={2} style={{fontFamily: 'Nunito_400Regular', fontSize: 13}} >{data?.name}</Text>
       </View>          
-      <Text className='text-white  ' style={{fontFamily: 'Nunito_400Regular', fontSize: 13}} >{data?.name}</Text>
       
     </Pressable>
   )
