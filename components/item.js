@@ -1,10 +1,15 @@
-import { View, Text, Image,ActivityIndicator, TouchableOpacity, Pressable } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import axios from 'axios';
-import { router } from 'expo-router';
-import { SQLiteStorage, Storage } from 'expo-sqlite/kv-store';
-import * as SQLite from 'expo-sqlite';
+// React and React Native
+import { View, Text, Image, ActivityIndicator, Pressable } from 'react-native';
+import React, { useEffect, useState } from 'react';
 
+// Expo Router
+import { router } from 'expo-router';
+
+// Expo SQLite
+import { Storage } from 'expo-sqlite/kv-store';
+
+// Axios
+import axios from 'axios';
 
 const Item = (props) => {
     let code_tmp = props.code;
@@ -227,9 +232,7 @@ async function store_each_tag(newTags) {
     //  loading ? (<Text>Loading...........</Text>)
     //     :
         
-        <Pressable className={`${thumb ? 'w-[calc(48%)]' : 'w-full'} rounded-lg overflow-hidden bg-black h-auto mb-4 `} onTouchEnd={()=>{
-                      router.push(`/code/${code_tmp}`)
-                  }}>
+        <Pressable className={`${thumb ? 'w-[calc(48%)]' : 'w-full'} rounded-lg overflow-hidden bg-black h-auto mb-4 `} onTouchEnd={()=>{ router.push(`/code/${code_tmp}`) }}>
             {  
 
             

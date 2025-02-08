@@ -6,6 +6,10 @@ const _layout = () => {
   return (
     <Stack>
         <Stack.Screen name='[code]' options={{header: ()=>null}} ></Stack.Screen>
+        <Stack.Screen name='tag' options={{header: ()=>null}} ></Stack.Screen>
+        <Stack.Screen name='actress' options={{header: ()=>null}} ></Stack.Screen>
+        
+
     </Stack>
   )
 }

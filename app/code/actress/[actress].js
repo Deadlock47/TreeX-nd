@@ -66,9 +66,9 @@ const Actress_Info = () => {
     // // console.log(actress , image , actress_code)
   return (
     <SafeAreaProvider className='w-screen h-full bg-neutral-900' >
-        <StatusBar style='inverted' ></StatusBar>
+        <StatusBar style='auto' ></StatusBar>
       <SafeAreaView className="w-screen h-full bg-neutral-900" >
-        <View className='absolute top-7 z-10 left-7' >
+        <View className='absolute top-10 z-10 left-10' >
           <Pressable 
               onTouchEnd={()=>{ 
                 router.back();

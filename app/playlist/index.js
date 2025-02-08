@@ -1,16 +1,28 @@
-import { View, Text, TextInput, TouchableOpacity, ScrollView, RefreshControl, Image } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
+// React and React Native
+import { View, Text, TextInput, TouchableOpacity, ScrollView, RefreshControl, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
+
+// Expo Router
+import { router } from 'expo-router';
+
+// Expo SQLite
+import { Storage } from 'expo-sqlite/kv-store';
+
+// Expo Fonts
+import { useFonts } from 'expo-font';
+import { Inter_900Black } from '@expo-google-fonts/inter';
+import { Roboto_400Regular } from '@expo-google-fonts/roboto';
+import { Nunito_400Regular, Nunito_700Bold } from '@expo-google-fonts/nunito';
+
+// Icons
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Entypo from '@expo/vector-icons/Entypo';
 
-import { Inter_900Black } from '@expo-google-fonts/inter'
-import { Roboto_400Regular } from '@expo-google-fonts/roboto'
-import { Nunito_400Regular , Nunito_700Bold } from '@expo-google-fonts/nunito'
-import { useFonts } from 'expo-font';
-import { Storage } from 'expo-sqlite/kv-store';
-import { router } from 'expo-router';
+// Playlist Image Data
 import { playlist_image } from './data_img';
+
+// Safe Area
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const index = () => {
     let [fontsLoaded] = useFonts({
@@ -30,22 +42,31 @@ const index = () => {
         if(!result)
         {
           await Storage.setItem("playlist","Milf");
+          await Storage.setIsImage("Milf","");
         }
         const arr = result.split(",");
       
         setPlaylists(arr);
         setRefreshing(false)
+
     }
     async function set_list(name)
     {
-      const result = await Storage.getItem("playlist");
-      let arr = result.split(',');
-      if(!arr.includes(name))
-      {
-          arr = [...arr,name];
+      try {
+        
+        const result = await Storage.getItem("playlist");
+        let arr = result.split(',');
+        if(!arr.includes(name))
+          {
+            arr = [...arr,name];
+          }
+          await Storage.setItem(name,"");
+          
+          // arr = arr.join(',');
+          await Storage.setItem("playlist",arr.join(','));
+      } catch (error) {
+        console.log(error)
       }
-      arr = arr.join(',');
-      await Storage.setItem("playlist",arr);
     }
 
     useEffect(()=>{
@@ -64,13 +85,10 @@ const index = () => {
               className=' text-white pb-3 pt-3 pl-6 flex-1 text-base tracking-wider ' ></TextInput>
 
               <TouchableOpacity 
-                  onPress={()=>{
-                      // setStatus("loading");
+                  onPress={()=>{ 
                       setSearchInput(txtinput);
                       console.log(txtinput)
                       set_list(txtinput);
-                      // get_list();
-                      // router.reload();
                   }}
 
                   className='rounded-full p-3 m-1 bg-neutral-700'
@@ -97,7 +115,6 @@ const index = () => {
 
 const Playlist_Item = ({item})=>{
 
-  // console.log(playlist_image["category"] == item )
   const [isImage , setIsImage] = useState("");
   async function getImage() {
     
@@ -117,7 +134,11 @@ const Playlist_Item = ({item})=>{
     Nunito_700Bold
   });
   return (
-    <View className='w-[calc(45%)] rounded-xl   bg-neutral-700 overflow-hidden h-32 flex justify-center items-center ' >
+    <View 
+      onTouchEnd={()=>{
+        router.push(`/playlist/${item}`)
+      }}
+    className='w-[calc(45%)] rounded-xl   bg-neutral-700 overflow-hidden h-32 flex justify-center items-center ' >
         {
           isImage ? 
           <Image className=" rounded-t-xl bg-[#ffffff72] "  width={"100%"} height={'100%'} resizeMode='cover'  source={{uri : isImage.length>0 && isImage}} ></Image>

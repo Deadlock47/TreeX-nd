@@ -1,16 +1,29 @@
-import { View, Text ,ScrollView, Image, Switch} from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { Link, router } from 'expo-router'
-import { StatusBar } from 'expo-status-bar'
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
-import Entypo from '@expo/vector-icons/Entypo'
-import Feather from '@expo/vector-icons/Feather';
-import Item from '../components/item'
-import { Storage } from 'expo-sqlite/kv-store'
-import { RefreshControl } from 'react-native'
+// React and React Native
+import { View, Text, ScrollView, Image, Switch, RefreshControl } from 'react-native';
+import React, { useEffect, useState } from 'react';
+
+// Expo Router
+import { Link, router } from 'expo-router';
+
+// Expo SQLite
+import { Storage } from 'expo-sqlite/kv-store';
+
+// Expo Clipboard
 import * as Clipboard from 'expo-clipboard';
 
-import BtmDrawer from '../components/bottom_drarwr'
+// Status Bar
+import { StatusBar } from 'expo-status-bar';
+
+// Safe Area
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+
+// Icons
+import Entypo from '@expo/vector-icons/Entypo';
+import Feather from '@expo/vector-icons/Feather';
+
+// Components
+import Item from '../components/item';
+import BtmDrawer from '../components/bottom_drarwr';
 
 const index = () => {
     const [jav_list , setJav_list] = useState([]);
@@ -49,7 +62,7 @@ const index = () => {
   return (
     <SafeAreaProvider className='h-full bg-neutral-700'>
       <SafeAreaView className=" bg-neutral-900 w-screen h-full" >
-          <StatusBar backgroundColor='transparent'  ></StatusBar>
+          <StatusBar backgroundColor='auto'  ></StatusBar>
           <View className="flex-row items-center justify-between py-4 px-3   " >
             <Entypo onPress={()=>{
                 refresh_data();
@@ -77,7 +90,7 @@ const index = () => {
             
           >
               
-                {/*
+                {/* 
                  
                  
                  

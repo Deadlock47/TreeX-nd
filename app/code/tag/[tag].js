@@ -35,7 +35,7 @@ const Tag = () => {
   return (
       <SafeAreaView className='w-screen h-full bg-neutral-900' >
       <StatusBar style='light' ></StatusBar>
-      <ScrollView className = "w-screen p-2 h-full mb-20 "
+      <ScrollView className = "w-screen p-2 h-full mb-2 "
               refreshControl={<RefreshControl refreshing={refreshing} onRefresh={get_Tag_Codes} ></RefreshControl>}
           >  
           <View className='flex-row w-full  mt-2 mb-5 h-fit justify-between' >  

@@ -7,8 +7,8 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { SQLiteProvider } from 'expo-sqlite';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import { create_table } from '../components/queries';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const _layout = () => {
   const focusedColor = "rgba(211, 169, 0, 1)"
@@ -23,6 +23,8 @@ const _layout = () => {
 }
 
   return (
+    <GestureHandlerRootView>
+      
     <SQLiteProvider databaseName='maint.db' onInit={initializeDatabase} >
       <Tabs screenOptions={({route})=>({
         tabBarShowLabel : false,
@@ -44,7 +46,6 @@ const _layout = () => {
             borderRadius:32,
             
           }
-          
           
         })} >
           <Tabs.Screen name='index' options={{headerShown:false, tabBarIcon : ({focused,color,size})=>
@@ -221,6 +222,8 @@ const _layout = () => {
             
       </Tabs>
     </SQLiteProvider>
+    </GestureHandlerRootView>
+
   )
 }
 

@@ -1,16 +1,31 @@
-import { View, Text, ScrollView, Dimensions, Image, Pressable } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { StatusBar } from 'expo-status-bar'
-import { FlatList } from 'react-native'
-import { Storage } from 'expo-sqlite/kv-store'
-import { RefreshControl } from 'react-native'
-import { router } from 'expo-router'
-import { Nunito_400Regular, useFonts } from '@expo-google-fonts/nunito'
+// React and React Native
+import { View, Text, ScrollView, Dimensions, Image, Pressable, RefreshControl } from 'react-native';
+import React, { useEffect, useState } from 'react';
 
-let {width , height} = Dimensions.get('window')
+// Expo Router
+import { router } from 'expo-router';
+
+// Expo SQLite
+import { Storage } from 'expo-sqlite/kv-store';
+
+// Expo Fonts
+import { Nunito_400Regular, useFonts } from '@expo-google-fonts/nunito';
+
+// Safe Area
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+// Status Bar
+import { StatusBar } from 'expo-status-bar';
+
+let { width, height } = Dimensions.get('window');
 
 const index = () => {
+
+  let [fontsLoaded] = useFonts({
+    // Inter_900Black,
+    // Roboto_400Regular,
+    Nunito_400Regular
+  });
 
   const [refreshing,setRefreshing] = useState(true);
   const [actress_list,setActress_list] = useState([]);
@@ -31,8 +46,8 @@ const index = () => {
   return (
     <SafeAreaView className=" bg-neutral-900 w-screen h-full" >
       <StatusBar style='auto' ></StatusBar>
-      <View className='w-screen h-auto p-4 bg-neutral-900' >
-        <Text className='text-white text-3xl text-center font-bold ' >Actress({actress_list.length})</Text>
+      <View className='h-16 mt-2 w-screen' >
+                <Text className='text-white text-center  ' style={{fontFamily: 'Nunito_700Bold', fontSize: 30}}>Actress({actress_list.length})</Text>
       </View>
       
       { actress_list.length > 0 && <ScrollView

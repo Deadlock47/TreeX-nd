@@ -1,13 +1,24 @@
-import { View, Text, ScrollView, RefreshControl, SectionList, Pressable } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
-import { StatusBar } from 'expo-status-bar'
-import { Inter_900Black } from '@expo-google-fonts/inter'
-import { Roboto_400Regular } from '@expo-google-fonts/roboto'
-import { Nunito_400Regular , Nunito_700Bold } from '@expo-google-fonts/nunito'
-import { useFonts } from 'expo-font'
-import { Storage } from 'expo-sqlite/kv-store'
-import { router } from 'expo-router'
+// React and React Native
+import { View, Text, ScrollView, RefreshControl, Pressable } from 'react-native';
+import React, { useEffect, useState } from 'react';
+
+// Expo Router
+import { router } from 'expo-router';
+
+// Expo SQLite
+import { Storage } from 'expo-sqlite/kv-store';
+
+// Expo Fonts
+import { useFonts } from 'expo-font';
+import { Inter_900Black } from '@expo-google-fonts/inter';
+import { Roboto_400Regular } from '@expo-google-fonts/roboto';
+import { Nunito_400Regular, Nunito_700Bold } from '@expo-google-fonts/nunito';
+
+// Safe Area
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+
+// Status Bar
+import { StatusBar } from 'expo-status-bar';
 
 const index = () => {
 
@@ -70,7 +81,6 @@ const fetchTags = async () => {
 };
 
   useEffect(()=>{
-   
 
   fetchTags();
   },[])
@@ -78,8 +88,9 @@ const fetchTags = async () => {
     <SafeAreaProvider className='h-screen bg-neutral-900 '>
       <SafeAreaView className='h-full w-screen bg-neutral-900' >
         <StatusBar style='light' ></StatusBar>
-        <View className='h-16  w-screen' >
-          <Text className='text-white text-center  ' style={{fontFamily: 'Nunito_700Bold', fontSize: 35}}>Tags({2})</Text>
+        
+        <View className='h-16 mt-2 w-screen' >
+          <Text className='text-white text-center  ' style={{fontFamily: 'Nunito_700Bold', fontSize: 30}}>Tags({2})</Text>
         </View>
         <ScrollView className='mb-24'
                         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={fetchTags} ></RefreshControl>}
@@ -101,9 +112,7 @@ const fetchTags = async () => {
         {data.data.map(tag => {
           
           return (
-          <Pressable onTouchEnd={()=>{
-            router.push({pathname : `/tags/${tag.tag_id}`,params : {tag_name : tag.name}})
-          }} key={tag.tag_id} className='' >
+          <Pressable onTouchEnd={()=>{ router.push({pathname : `/tags/${tag.tag_id}`,params : {tag_name : tag.name}}) }} key={tag.tag_id} className='' >
             <Text className='w-fit bg-yellow-700 p-2 h-fit pt-2.5 pb-2.5 text-neutral-200 ' key={tag.tag_id}>{tag.name}</Text>
           </Pressable>
           )
