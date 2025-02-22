@@ -1,0 +1,44 @@
+{
+  "expo": {
+    "name": "TreeX",
+    "slug": "treex",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#000000"
+    },
+   
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#000000"
+      },
+      "package": "com.deadlock0001.treex",
+      "versionCode": 5
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "89bebd7a-05e8-4395-85f1-b4e8cc2f242e"
+      }
+    },
+    "runtimeVersion": "1.0.0i",
+    
+    "plugins": [
+      "expo-router",
+      "expo-sqlite"
+    ],
+    "owner": "deadlock0001"
+  }
+}
